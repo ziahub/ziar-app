@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('ziar-export App', () => {
+describe('ziar-app App', () => {
   let page: AppPage;
 
   beforeEach(() => {
