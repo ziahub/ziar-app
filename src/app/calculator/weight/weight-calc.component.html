@@ -1,0 +1,82 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="#">Home</a></li>
+  <li class="breadcrumb-item active">Weight Calculator</li>
+</ol>
+
+<div  *ngIf="isCaluculationDone" class="alert alert-success alert-dismissible fade show" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="isCaluculationDone = !isCaluculationDone">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Weight Calculation is done ! </strong> Expected weight of {{selectedShape.name}} should be {{weight}} {{unit}}.
+</div>
+
+<div class="container">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+    <div class="form-group row">
+      <label for="inputGuage" class="col-sm-2 col-form-label">Guage : </label>
+      <div class="col-sm-10">
+        <select class="form-control" id="inputGuage" name="guage" ngModel required>
+          <option value="19" disabled>Choose a guage</option>
+          <option *ngFor="let guage of guages">{{guage}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="inputShape" class="col-sm-2 col-form-label">Shape : </label>
+      <div class="col-sm-10">
+        <select class="form-control" id="inputShape" name="shape" [(ngModel)]="selectedShape" required>
+          <option value="" disabled>Choose a shape</option>
+          <option *ngFor="let shape of shapes" [ngValue]="shape">
+            {{ shape.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="selectedShape.name==='Rectangle'">
+      <div class="form-group row">
+        <label for="inputLength" class="col-sm-2 col-form-label">Length(inches) : </label>
+        <div class="col-sm-10">
+          <input class="form-control" type ="number"  min="0" id="inputLength" name="length" aria-label="length" [(ngModel)]="selectedShape.length">
+            <p ng-show="f.inputLength.$invalid && f.inputLength.$dirty">
+              Length is required to be Number
+            </p>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="inputBreadth" class="col-sm-2 col-form-label">Breadth(inches) : </label>
+        <div class="col-sm-10">
+          <input class="form-control" type ="number" min="0" id="inputBreadth" name="breadth" aria-label="breadth" [(ngModel)]="selectedShape.breadth">
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedShape.name==='Square'">
+      <div class="form-group row">
+        <label for="inputSide" class="col-sm-2 col-form-label">Side(inches) : </label>
+        <div class="col-sm-10">
+          <input class="form-control" type ="number" min="0" id="inputSide" name="side" aria-label="length" [(ngModel)]="selectedShape.side">
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedShape.name==='Circle'">
+      <div class="form-group row">
+        <label for="inputRadius" class="col-sm-2 col-form-label">Radius(inches) : </label>
+        <div class="col-sm-10">
+          <input class="form-control" type ="number" min="0" id="inputRadius" name="radius" aria-label="length" [(ngModel)]="selectedShape.radius">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <button type="submit" class="btn btn-primary">Calculate</button>
+      </div>
+    </div>
+  </form>
+  <!-- <p>Form value: {{ f.value | json }}</p> -->
+</div>
