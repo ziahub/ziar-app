@@ -40,9 +40,6 @@
         <label for="inputLength" class="col-sm-2 col-form-label">Length(inches) : </label>
         <div class="col-sm-10">
           <input class="form-control" type ="number"  min="0" id="inputLength" name="length" aria-label="length" [(ngModel)]="selectedShape.length">
-            <p ng-show="f.inputLength.$invalid && f.inputLength.$dirty">
-              Length is required to be Number
-            </p>
         </div>
       </div>
 
