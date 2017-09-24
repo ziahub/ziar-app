@@ -2,13 +2,21 @@ import { Shape } from './shape';
 
 export class Circle extends Shape {
 
-    public radius:number = 0;
+    public diameter:number;
 
     constructor() {
       super("Circle");
     }
 
-    getArea(): number {
-      return Math.PI * this.radius ** 2;
+    public getArea(): number {
+      return Math.PI * (this.diameter/2) ** 2;
+    }
+
+    public getCircumference(): number {
+      return 2 * Math.PI * (this.diameter/2);
+    }
+
+    public toString(): String {
+      return this.name;
     }
 }

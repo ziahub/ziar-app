@@ -7,7 +7,15 @@ export class Square extends Shape {
         super("Square");
     }
 
-    getArea(): number {
+    public getArea(): number {
       return this.side ** 2;
+    }
+
+    public getCircumference(): number {
+      return 4 * this.side;
+    }
+
+    public toString(): String {
+      return this.name;
     }
 }

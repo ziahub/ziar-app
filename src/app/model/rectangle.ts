@@ -9,7 +9,15 @@ export class Rectangle extends Shape {
     super("Rectangle");
   }
 
-  getArea(): number {
+  public getArea(): number {
     return this.length*this.breadth;
+  }
+
+  public getCircumference(): number {
+    return (2 * this.length) + (2 * this.breadth);
+  }
+
+  public toString(): String {
+    return this.name;
   }
 }

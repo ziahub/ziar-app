@@ -7,27 +7,27 @@
   <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="isCaluculationDone = !isCaluculationDone">
     <span aria-hidden="true">&times;</span>
   </button>
-  <strong>Weight Calculation is done ! </strong> Expected weight of {{selectedShape.name}} should be {{weight}} {{unit}}.
+  <strong>Weight Calculation is done ! </strong> Expected weight of {{selectedShape.name}} should be <strong>{{weight}} {{unit}}</strong> and circumference is <strong>{{circumference}} {{selectedLengthScale}}</strong>.
 </div>
 
 <div class="container">
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-
+    <!-- <p>Is "f" valid? {{f.valid}}</p> -->
     <div class="form-group row">
       <label for="inputGuage" class="col-sm-2 col-form-label">Guage : </label>
       <div class="col-sm-10">
-        <select class="form-control" id="inputGuage" name="guage" ngModel required>
-          <option value="19" disabled>Choose a guage</option>
-          <option *ngFor="let guage of guages">{{guage}}</option>
+        <select class="form-control" id="inputGuage" name="guage" [(ngModel)]="selectedGuage" required>
+          <!-- <option value="" disabled>Choose a guage</option> -->
+          <option *ngFor="let guage of guages" [ngValue]="guage">{{guage}}</option>
         </select>
       </div>
     </div>
 
     <div class="form-group row">
-      <label for="inputShape" class="col-sm-2 col-form-label">Shape : </label>
+      <label for="shape" class="col-sm-2 col-form-label">Shape : </label>
       <div class="col-sm-10">
-        <select class="form-control" id="inputShape" name="shape" [(ngModel)]="selectedShape" required>
-          <option value="" disabled>Choose a shape</option>
+        <select class="form-control" id="shape" name="shape" [(ngModel)]="selectedShape" required>
+          <option value="{{selectedShape}}" disabled>Choose a shape</option>
           <option *ngFor="let shape of shapes" [ngValue]="shape">
             {{ shape.name }}
           </option>
@@ -35,43 +35,68 @@
       </div>
     </div>
 
-    <div *ngIf="selectedShape.name==='Rectangle'">
+    <div class="form-group row">
+      <label for="lengthScale" class="col-sm-2 col-form-label">Unit of Mesurement : </label>
+      <div class="col-sm-10">
+        <select class="form-control" id="lengthScale" name="lengthScale" [(ngModel)]="selectedLengthScale" required>
+          <option value="" disabled>Choose a Dimension Scale</option>
+          <option *ngFor="let lengthScale of lengthScales" [ngValue]="lengthScale">
+            {{ lengthScale }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="selectedShape.name==='Rectangle' || selectedShape.name==='Oval'">
       <div class="form-group row">
-        <label for="inputLength" class="col-sm-2 col-form-label">Length(inches) : </label>
+        <label for="length" class="col-sm-2 col-form-label">Length ({{selectedLengthScale}}) : </label>
         <div class="col-sm-10">
-          <input class="form-control" type ="number"  min="0" id="inputLength" name="length" aria-label="length" [(ngModel)]="selectedShape.length">
+          <input class="form-control" type ="number"  min="0" id="length" name="length" #length="ngModel" aria-label="length" [(ngModel)]="selectedShape.length" required>
+          <div class="alert alert-danger" *ngIf="length.touched && !length.valid">
+            <div *ngIf="length.errors.required">Length value is required</div>
+          </div>
         </div>
       </div>
 
       <div class="form-group row">
-        <label for="inputBreadth" class="col-sm-2 col-form-label">Breadth(inches) : </label>
+        <label for="breadth" class="col-sm-2 col-form-label">Breadth ({{selectedLengthScale}}) : </label>
         <div class="col-sm-10">
-          <input class="form-control" type ="number" min="0" id="inputBreadth" name="breadth" aria-label="breadth" [(ngModel)]="selectedShape.breadth">
+          <input class="form-control" type ="number" min="0" id="breadth" name="breadth" #breadth="ngModel" aria-label="breadth" [(ngModel)]="selectedShape.breadth" required>
+          <div class="alert alert-danger" *ngIf="breadth.touched && !breadth.valid">
+            <div *ngIf="breadth.errors.required">Breadth value is required</div>
+          </div>
         </div>
       </div>
     </div>
 
     <div *ngIf="selectedShape.name==='Square'">
       <div class="form-group row">
-        <label for="inputSide" class="col-sm-2 col-form-label">Side(inches) : </label>
+        <label for="side" class="col-sm-2 col-form-label">Side ({{selectedLengthScale}}) : </label>
         <div class="col-sm-10">
-          <input class="form-control" type ="number" min="0" id="inputSide" name="side" aria-label="length" [(ngModel)]="selectedShape.side">
+          <input class="form-control" type="number" min="0" id="side" name="side" #side="ngModel" aria-label="side length" [(ngModel)]="selectedShape.side" required>
+          <div class="alert alert-danger" *ngIf="side.touched && !side.valid">
+            <div *ngIf="side.errors.required">Side value is required</div>
+          </div>
         </div>
       </div>
     </div>
 
     <div *ngIf="selectedShape.name==='Circle'">
       <div class="form-group row">
-        <label for="inputRadius" class="col-sm-2 col-form-label">Radius(inches) : </label>
+        <label for="diameter" class="col-sm-2 col-form-label">Dia ({{selectedLengthScale}}) : </label>
         <div class="col-sm-10">
-          <input class="form-control" type ="number" min="0" id="inputRadius" name="radius" aria-label="length" [(ngModel)]="selectedShape.radius">
+          <input class="form-control" type="number" min="0" id="diameter" #diameter="ngModel" name="diameter" aria-label="diameter"
+            [(ngModel)]="selectedShape.diameter" required>
+            <div class="alert alert-danger" *ngIf="diameter.touched && !diameter.valid">
+              <div *ngIf="diameter.errors.required">Diameter value is required</div>
+            </div>
         </div>
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col-sm-10">
-        <button type="submit" class="btn btn-primary">Calculate</button>
+        <button type="submit" [ngClass]="(f.invalid)?'btn btn-secondary':'btn btn-primary'" [disabled]="f.invalid">Calculate</button>
       </div>
     </div>
   </form>

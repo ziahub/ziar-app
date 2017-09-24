@@ -5,6 +5,7 @@ import { Rectangle } from '../../model/rectangle';
 import { Square } from '../../model/square';
 import { Circle } from '../../model/circle';
 import { Sheet } from '../../model/sheet';
+import { LengthScale } from '../../model/length-scale';
 
 @Injectable()
 export class WeightCalculator {
@@ -43,12 +44,12 @@ export class WeightCalculator {
     this.densitySheetMap.set(30, new Sheet(30, 2.0, rectangle));
   }
 
-  public calculateWeight(guage:number, shape:Shape):number {
-    return this.getDensity(guage)*shape.getArea();
+  public calculateWeight(guage:number, shape:Shape, lengthScale: LengthScale):number {
+    return this.getDensity(guage,lengthScale)*shape.getArea();
   }
 
-  public getDensity(guage:number):number {
-    return this.densitySheetMap.get(guage).getDensity();
+  public getDensity(guage:number, lengthScale: LengthScale):number {
+    return this.densitySheetMap.get(guage).getDensity(lengthScale);
   }
 
 }
