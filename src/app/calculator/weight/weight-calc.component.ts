@@ -19,9 +19,9 @@ export class WeightCalculatorComponent implements OnInit {
 
   private weightCalculator: WeightCalculator;
 
-  private shapes:Array<Shape> = [new Rectangle(), new Square(), new Circle(), new Oval()];
-  private guages:Array<number> = [10,11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
-  private lengthScales:Array<String> = [LengthScale[LengthScale.inches], LengthScale[LengthScale.centimeter],
+  shapes:Array<Shape> = [new Rectangle(), new Square(), new Circle(), new Oval()];
+  guages:Array<number> = [10,11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+  lengthScales:Array<String> = [LengthScale[LengthScale.inches], LengthScale[LengthScale.centimeter],
     LengthScale[LengthScale.millimeter]];
 
   selectedShape:Shape;
